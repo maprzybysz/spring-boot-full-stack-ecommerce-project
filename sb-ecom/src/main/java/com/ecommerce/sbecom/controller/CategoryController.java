@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -18,18 +19,18 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("api/public/categories")
+    @GetMapping("/public/categories")
     public ResponseEntity<List<Category>> getAllCategories() {
         return ResponseEntity.ok(categoryService.getAllCategories());
     }
 
-    @PostMapping("/api/admin/categories")
+    @PostMapping("/admin/categories")
     public ResponseEntity<String> createCategory(@RequestBody Category category) {
         categoryService.createCategory(category);
         return new ResponseEntity<>("Category added successfully", HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/api/admin/categories/{categoryId}")
+    @DeleteMapping("/admin/categories/{categoryId}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId) {
         try {
             return ResponseEntity
@@ -40,10 +41,10 @@ public class CategoryController {
         }
     }
 
-    @PutMapping("/api/admin/categories/{categoryId}")
+    @PutMapping("/admin/categories/{categoryId}")
     public ResponseEntity<String> updateCategory(@PathVariable Long categoryId, @RequestBody Category category) {
         try {
-            Category savedCategory = categoryService.updateCategory(categoryId, category);
+            categoryService.updateCategory(categoryId, category);
             return new ResponseEntity<>("Category with category id: " + categoryId, HttpStatus.CREATED);
         } catch (ResponseStatusException e) {
             return new ResponseEntity<>(e.getReason(), e.getStatusCode());
