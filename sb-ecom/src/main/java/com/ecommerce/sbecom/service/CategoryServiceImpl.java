@@ -3,6 +3,7 @@ package com.ecommerce.sbecom.service;
 import com.ecommerce.sbecom.exceptions.APIException;
 import com.ecommerce.sbecom.exceptions.ResourceNotFoundException;
 import com.ecommerce.sbecom.model.Category;
+import com.ecommerce.sbecom.payload.CategoryResponse;
 import com.ecommerce.sbecom.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +19,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> getAllCategories() {
+    public CategoryResponse getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
         if (categories.isEmpty()) {
             throw new APIException("No categories created till now!");
         }
-        return categories;
+        return categories.stream().map()
     }
 
     @Override
