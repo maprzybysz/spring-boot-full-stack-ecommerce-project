@@ -1,6 +1,6 @@
 package com.ecommerce.sbecom.controller;
 
-import com.ecommerce.sbecom.model.Category;
+import com.ecommerce.sbecom.payload.CategoryDTO;
 import com.ecommerce.sbecom.payload.CategoryResponse;
 import com.ecommerce.sbecom.service.CategoryService;
 import jakarta.validation.Valid;
@@ -24,9 +24,8 @@ public class CategoryController {
     }
 
     @PostMapping("/public/categories")
-    public ResponseEntity<String> createCategory(@RequestBody @Valid Category category) {
-        categoryService.createCategory(category);
-        return new ResponseEntity<>("Category added successfully", HttpStatus.CREATED);
+    public ResponseEntity<CategoryDTO> createCategory(@RequestBody @Valid CategoryDTO categoryDTO) {
+        return new ResponseEntity<>(categoryService.createCategory(categoryDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/admin/categories/{categoryId}")
@@ -35,8 +34,8 @@ public class CategoryController {
     }
 
     @PutMapping("/public/categories/{categoryId}")
-    public ResponseEntity<String> updateCategory(@PathVariable Long categoryId, @RequestBody @Valid Category category) {
-        categoryService.updateCategory(categoryId, category);
+    public ResponseEntity<String> updateCategory(@PathVariable Long categoryId, @RequestBody @Valid CategoryDTO categoryDTO) {
+        categoryService.updateCategory(categoryId, categoryDTO);
         return new ResponseEntity<>("Category with category id: " + categoryId + " updated", HttpStatus.OK);
     }
 }
