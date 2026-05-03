@@ -20,4 +20,13 @@ public class SocialProfile {
     @JoinColumn(name = "social_user_id")
     @JsonIgnore
     private SocialUser socialUser;
+
+    private String description;
+
+    public void setSocialUser(SocialUser socialUser) {
+        this.socialUser = socialUser;
+        if (socialUser.getSocialProfile() != this) {
+            socialUser.setSocialProfile(this);
+        }
+    }
 }
