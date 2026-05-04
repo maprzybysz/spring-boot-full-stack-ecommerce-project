@@ -1,12 +1,21 @@
 package com.social.media.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SocialUser {
 
     @Id
@@ -25,37 +34,7 @@ public class SocialUser {
             inverseJoinColumns = @JoinColumn(name = "social_group_id")
     )
     private Set<SocialGroup> socialGroups = new HashSet<>();
-
-    public SocialUser() {
-    }
-
-    public SocialUser(Long id, SocialProfile socialProfile, List<Post> posts, Set<SocialGroup> socialGroups) {
-        this.id = id;
-        this.socialProfile = socialProfile;
-        this.posts = posts;
-        this.socialGroups = socialGroups;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public SocialProfile getSocialProfile() {
-        return socialProfile;
-    }
-
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public Set<SocialGroup> getSocialGroups() {
-        return socialGroups;
-    }
-
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) {

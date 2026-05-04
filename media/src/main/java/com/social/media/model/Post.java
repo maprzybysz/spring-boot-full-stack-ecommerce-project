@@ -3,8 +3,16 @@ package com.social.media.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Post {
 
     @Id
@@ -15,27 +23,7 @@ public class Post {
     @JoinColumn(name = "social_user_id")
     @JsonIgnore
     private SocialUser socialUser;
-
-    public Post() {
-    }
-
-    public Post(Long id, SocialUser socialUser) {
-        this.id = id;
-        this.socialUser = socialUser;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public SocialUser getSocialUser() {
-        return socialUser;
-    }
-
+    
     public void setSocialUser(SocialUser socialUser) {
         if (this.socialUser == socialUser) {
             return;

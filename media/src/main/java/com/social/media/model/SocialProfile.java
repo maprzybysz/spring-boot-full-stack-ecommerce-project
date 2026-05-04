@@ -2,8 +2,16 @@ package com.social.media.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SocialProfile {
 
     @Id
@@ -16,35 +24,6 @@ public class SocialProfile {
     private SocialUser socialUser;
 
     private String description;
-
-    public SocialProfile() {
-    }
-
-    public SocialProfile(Long id, SocialUser socialUser, String description) {
-        this.id = id;
-        this.socialUser = socialUser;
-        this.description = description;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public SocialUser getSocialUser() {
-        return socialUser;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public void setSocialUser(SocialUser socialUser) {
         if (this.socialUser == socialUser) {
