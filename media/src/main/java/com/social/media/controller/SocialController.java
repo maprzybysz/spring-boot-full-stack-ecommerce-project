@@ -1,33 +1,42 @@
 package com.social.media.controller;
 
-import com.social.media.model.SocialUser;
+import com.social.media.dto.SocialUserDtoMapper;
+import com.social.media.dto.SocialUserRequestDto;
+import com.social.media.dto.SocialUserResponseDto;
 import com.social.media.service.SocialService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
+@RequestMapping("/social/users")
 public class SocialController {
 
     private final SocialService socialService;
 
-    @GetMapping("/social/users")
-    public ResponseEntity<List<SocialUser>> getUsers() {
-        return new ResponseEntity<>(socialService.getAllUsers(), HttpStatus.OK);
+    public SocialController(SocialService socialService) {
+        this.socialService = socialService;
     }
 
-    @PostMapping("/social/users")
-    public ResponseEntity<SocialUser> saveUser(@RequestBody SocialUser socialUser) {
-        return new ResponseEntity<>(socialService.saveUser(socialUser), HttpStatus.CREATED);
+    @GetMapping
+    public ResponseEntity<List<SocialUserResponseDto>> getUsers() {
+        List<SocialUserResponseDto> users = socialService.getAllUsers()
+                .stream()
+                .map(SocialUserDtoMapper::toResponseDto)
+                .toList();
+        return ResponseEntity.ok(users);
     }
 
-    @DeleteMapping("/social/users/{userId}")
+    @PostMapping
+    public ResponseEntity<SocialUserResponseDto> saveUser(@RequestBody SocialUserRequestDto requestDto) {
+        return ResponseEntity.status(201)
+                .body(SocialUserDtoMapper.toResponseDto(socialService.saveUser(SocialUserDtoMapper.toEntity(requestDto))));
+    }
+
+    @DeleteMapping("/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
         socialService.deleteUser(userId);
-        return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
+        return ResponseEntity.ok("User deleted successfully");
     }
 }
