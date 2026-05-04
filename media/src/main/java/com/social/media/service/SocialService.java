@@ -12,12 +12,18 @@ import java.util.List;
 public class SocialService {
 
     private final SocialUserRepository socialUserRepository;
-    
+
     public List<SocialUser> getAllUsers() {
         return socialUserRepository.findAll();
     }
 
     public SocialUser saveUser(SocialUser socialUser) {
         return socialUserRepository.save(socialUser);
+    }
+
+    public SocialUser deleteUser(Long userId) {
+        SocialUser user = socialUserRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        socialUserRepository.delete(user);
+        return user;
     }
 }
