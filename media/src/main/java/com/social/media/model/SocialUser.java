@@ -20,7 +20,7 @@ public class SocialUser {
     @OneToOne(mappedBy = "socialUser", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private SocialProfile socialProfile;
 
-    @OneToMany(mappedBy = "socialUser")
+    @OneToMany(mappedBy = "socialUser", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Post> posts = new ArrayList<>();
 
     @ManyToMany
